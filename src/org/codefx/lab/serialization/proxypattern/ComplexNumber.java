@@ -24,12 +24,24 @@ public final class ComplexNumber implements Serializable {
 
 	// FIELDS (define the state so they are of special interest for serialization)
 
+	/*
+	 * The serialization proxy should capture the perfect logical representation. Since storing the coordinate and the
+	 * polar form for performance reasons is redundant and an implementation detail, it should not show in that
+	 * representation. Hence the proxy only uses the coordinates to store the number. With the default or a custom
+	 * serialized form the missing numbers would have to be initialized after deserialization so they couldn't be final.
+	 * Due to the pattern, that is not the case here and all fields are final (as they should be).
+	 */
+
+	// serialized by the proxy
 	private final double real;
 
+	// serialized by the proxy
 	private final double imaginary;
 
+	// NOT serialized by the proxy
 	private final double magnitude;
 
+	// NOT serialized by the proxy
 	private final double angle;
 
 	// CONSTRUCTION (good example for static factory methods)
@@ -117,11 +129,6 @@ public final class ComplexNumber implements Serializable {
 		throw new InvalidObjectException("Proxy required.");
 	}
 
-	/**
-	 * The serialization proxy should capture the perfect logical representation. Since storing the coordinate and the
-	 * polar form for performance reasons is redundant and an implementation detail, it should not show in that
-	 * representation. Hence the proxy only uses one from to store the number.
-	 */
 	private static class SerializationProxy implements Serializable {
 
 		private static final long serialVersionUID = -5617583940055969353L;
