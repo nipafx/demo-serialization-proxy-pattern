@@ -13,6 +13,7 @@ public class Demo {
 		Demo demo = new Demo();
 
 		demo.serializeComplexNumbers();
+		demo.serializeInstanceCache();
 	}
 
 	// DEMO
@@ -36,6 +37,32 @@ public class Demo {
 		double randomInInterval0To20 = randomInInterval0To1 * 20;
 		double randomInIntervalMinus10To10 = randomInInterval0To20 - 10;
 		return randomInIntervalMinus10To10;
+	}
+
+	private void serializeInstanceCache() throws Exception {
+		InstanceCache cache = new InstanceCache();
+		cache.put("a string");
+		cache.put(0);
+		cache.put(new NotSerializableString("not serializable!"));
+		print("instance to serialize: " + cache);
+
+		InstanceCache cacheDeserialized = serializeAndDeserialize(cache);
+		print("deserialized instance: " + cacheDeserialized);
+	}
+
+	private static class NotSerializableString {
+
+		private final String value;
+
+		public NotSerializableString(String value) {
+			super();
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return value;
+		}
 	}
 
 	// USABILITY
