@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  * A heterogeneous container, which can cache one instance per class.
  */
 @SuppressWarnings("serial")
-public class InstanceCache implements Serializable {
+public final class InstanceCache implements Serializable {
 
 	/*
 	 * Note that this class was designed to give a good example for serialization, not to provide a realistic
